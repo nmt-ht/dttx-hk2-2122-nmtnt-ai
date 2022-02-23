@@ -16,6 +16,7 @@ class Graph:
         # and who's neighbors have been inspected
         open_list = set([start_node])
         closed_list = set([])
+        countOpenedNode = 0
 
         # g contains current distances from start_node to all other nodes
         # the default value (if it's not found in the map) is +infinity
@@ -33,7 +34,8 @@ class Graph:
             # find a node with the lowest value of f() - evaluation function
             for v in open_list:
                 if n == None or g[v] < g[n]:
-                    n = v;
+                    n = v
+                    countOpenedNode = countOpenedNode + 1
 
             if n == None:
                 print('Path does not exist!')
@@ -53,6 +55,7 @@ class Graph:
                 reconst_path.reverse()
 
                 print('Path found: {}'.format(reconst_path))
+                print("Opened node: ", countOpenedNode)
                 return reconst_path
 
             # for all neighbors of the current node do
@@ -103,23 +106,29 @@ graph1.ucs_algorithm('S', 'G')
 print("--------------------------------------------------------------\n")
 
 adjacency_list_2 = {
-    'a': [('C', 2), ('D', 3)],
-    'b': [('D', 2), ('E', 4)],
-    'c': [('G', 4)],
-    'd': [('G', 4)],
-    'e': [('G', 4)],
-    'f': [],
-    's': [('G', 6)],
-    'h': [],
-    'k': [('B', 1), ('A', 2), ('F', 3)],
-    'm': [],
-    'n': [],
-    'p': [],
-    'q': [],
-    'r': [],
-    't': [],
-    'g': []
+    'a': [('b', 5), ('c', 3)],
+    'b': [('a', 4), ('d', 6)],
+    'c': [('a', 4), ('k', 2)],
+    'd': [('b', 5), ('e', 7), ('m', 7)],
+    'e': [('d', 6), ('n', 8)],
+    'f': [('s', 0), ('p', 2)],
+    's': [('f', 1), ('h', 1)],
+    'h': [('s', 0), ('k', 2)],
+    'k': [('c', 3), ('h', 3)],
+    'm': [('d', 7), ('n', 8), ('g', 6)],
+    'n': [('e', 7), ('m', 7)],
+    'p': [('f', 1), ('q', 3)],
+    'q': [('p', 2), ('r', 4)],
+    'r': [('q', 3), ('t', 5)],
+    't': [('r', 4), ('g', 6)],
+    'g': [('t', 5)]
 }
+
+print("Graph 2: ", adjacency_list_2)
+graph2 = Graph(adjacency_list_2)
+print("\nUCS from s to g")
+graph2.ucs_algorithm('s', 'g')
+print("--------------------------------------------------------------\n")
 
 adjacency_list_3 = {
     'A': [('B', 1), ('C', 4)],

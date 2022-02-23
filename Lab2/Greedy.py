@@ -17,7 +17,7 @@ class Graph:
         # and who's neighbors have been inspected
         open_list = set([start_node])
         closed_list = set([])
-
+        countOpenedNode = 0
         # g contains current distances from start_node to all other nodes
         # the default value (if it's not found in the map) is +infinity
         g = {}
@@ -34,8 +34,9 @@ class Graph:
             # find a node with the lowest value of f() - evaluation function
             for v in open_list:
                 if n == None or self.h[v] < self.h[n]:
-                    n = v;
-
+                    n = v
+                    countOpenedNode = countOpenedNode + 1
+                    
             if n == None:
                 print('Path does not exist!')
                 return None
@@ -54,6 +55,7 @@ class Graph:
                 reconst_path.reverse()
 
                 print('Path found: {}'.format(reconst_path))
+                print("Opened node: ", countOpenedNode)
                 return reconst_path
 
             # for all neighbors of the current node do
@@ -131,24 +133,26 @@ adjacency_list_2 = {
     't': ['r', 'g'],
     'g': ['t']
 }
+
 heuristic2 = {
-    'a': '4',
-    'b': '3',
-    'c': '3',
-    'd': '2',
-    'e': '3',
-    'f': '5',
-    's': '4',
-    'h': '3',
-    'k': '2',
-    'm': '1',
-    'n': '2',
-    'p': '4',
-    'q': '3',
-    'r': '2',
-    't': '1',
-    'g': '0'
+    'a': 4,
+    'b': 3,
+    'c': 3,
+    'd': 2,
+    'e': 3,
+    'f': 5,
+    's': 4,
+    'h': 3,
+    'k': 2,
+    'm': 1,
+    'n': 2,
+    'p': 4,
+    'q': 3,
+    'r': 2,
+    't': 1,
+    'g': 0
 }
+
 print("Graph 2: ", adjacency_list_2)
 graph3_1 = Graph(adjacency_list_2, heuristic2)
 print("\nGreedy from s to g")
